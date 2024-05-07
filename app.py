@@ -70,7 +70,7 @@ async def say_hello(name: str):
     return {"message": f"Hello {name}"}
 
 
-@app.get("/authenticate")
+@app.get("/api")
 async def authenticate():
     return {"message": "done"}
 
