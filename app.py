@@ -88,7 +88,7 @@ async def new_session():
             "rooms": session.rooms}
 
 @app.get("/api/sessions")
-async def new_session():
+async def sessions():
     return {"sessions": session.room_count,
             "rooms": session.rooms}
 
