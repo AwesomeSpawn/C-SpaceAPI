@@ -1,10 +1,20 @@
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
 
 app = FastAPI()
+origins = ["*"]
+
+app.add_middleware(
+ CORSMiddleware,
+ allow_origins=origins,
+ allow_credentials=True,
+ allow_methods=["*"],
+ allow_headers=["*"],
+)
 username = "okee3853"
 password = "CS351"
 uri = f"mongodb+srv://{username}:{password}@cloudcomputingcspace0.e9vkjsj.mongodb.net/ComputerScience?retryWrites=true&w=majority&appName=CloudComputingCSpace0"
