@@ -65,7 +65,7 @@ async def root():
     return {"message": "Hello World"}
 
 
-@app.get("/hello/{name}")
+@app.get("/api/hello/{name}")
 async def say_hello(name: str):
     return {"message": f"Hello {name}"}
 
@@ -80,7 +80,7 @@ async def authenticate():
 #
 #    return {"message": "success", "room_name": {room.name}}
 
-@app.get("/new_session")
+@app.get("/api/new_session")
 async def new_session():
     room_name = session.new_session()
     return {"sessions": session.room_count,
@@ -88,7 +88,7 @@ async def new_session():
             "rooms": session.rooms}
 
 
-@app.put("/delete_session/{session_num}")
+@app.put("/api/delete_session/{session_num}")
 async def delete_session(session_num: int):
     room_name = session.delete_session(session_num)
     return {"sessions": session.room_count,
@@ -96,7 +96,7 @@ async def delete_session(session_num: int):
             "rooms": session.rooms}
 
 
-@app.get("/ping_database")
+@app.get("/api/ping_database")
 async def ping_database():
     db = client["ComputerScience"]
     collection = db["ComputerScience"]
