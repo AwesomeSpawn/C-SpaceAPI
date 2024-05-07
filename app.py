@@ -87,6 +87,11 @@ async def new_session():
             "created_room_name": room_name,
             "rooms": session.rooms}
 
+@app.get("/api/sessions")
+async def new_session():
+    return {"sessions": session.room_count,
+            "rooms": session.rooms}
+
 
 @app.put("/api/delete_session/{session_num}")
 async def delete_session(session_num: int):
