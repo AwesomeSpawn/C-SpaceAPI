@@ -124,15 +124,15 @@ async def ping_database():
 @app.get("/api/add_message/{room_num}/{message}")
 async def get_messages(room_num: int, message: str):
     return {
-        [
-            {"author": "Person 1", "message": "Hello!"},
+        "return": [
+            {"author": "Person 1", "message": message},
         ]
     }
 @app.get("/api/get_messages/{room_num}")
 async def get_messages(room_num: int):
 
     return {
-        [
+        "return": [
             {"author": "Person 1", "message": "Hello!"},
         ]
     }
