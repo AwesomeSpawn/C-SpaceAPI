@@ -4,6 +4,7 @@ from pydantic import BaseModel
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
+import time
 
 app = FastAPI()
 origins = ["*"]
@@ -122,25 +123,35 @@ async def ping_database():
 
 
 @app.get("/api/add_message/{room_num}/{message}")
-async def get_messages(room_num: int, message: str):
+async def add_message(room_num: int, message: str):
     db = client["ComputerScience"]
     collection = db["ComputerScience"]
     message_data = {
         "author": "Placeholder McGee",
         "message": message,
-        "time": "test"
+        "room": f"Room {room_num}",
+        "time": "test",
     }
-    collection.insert_one(message_data)
+    print("before database")
+    blah = collection.insert_one(message_data).inserted_id
+
+    print(blah)
+
     return {
         "return": [
-            message_data
+            "okie"
         ]
     }
 @app.get("/api/get_messages/{room_num}")
 async def get_messages(room_num: int):
+    db = client["ComputerScience"]
+    collection = db["ComputerScience"]
 
+    response = collection.find({"room": f"Room {room_num}"})
+    print(response)
+    formatted_response = []
+    for message in response:
+        formatted_response.append(message["message"])
     return {
-        "return": [
-            {"author": "Person 1", "message": "Hello!"},
-        ]
+        "return": formatted_response
     }
