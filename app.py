@@ -123,9 +123,17 @@ async def ping_database():
 
 @app.get("/api/add_message/{room_num}/{message}")
 async def get_messages(room_num: int, message: str):
+    db = client["ComputerScience"]
+    collection = db["ComputerScience"]
+    message_data = {
+        "author": "Placeholder McGee",
+        "message": message,
+        "time": "test"
+    }
+    collection.insert_one(message_data)
     return {
         "return": [
-            {"author": "Person 1", "message": message},
+            message_data
         ]
     }
 @app.get("/api/get_messages/{room_num}")
