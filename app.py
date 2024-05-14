@@ -29,6 +29,12 @@ class Room(BaseModel):
     owner: str
     number: int
 
+class Message:
+    def __init(self):
+        self.author = ""
+        self.message = ""
+        self.room = ""
+        self.time = 0
 
 class Room:
     def __init__(self):
@@ -114,3 +120,19 @@ async def ping_database():
 
     return {"response": response}
 
+
+@app.get("/api/add_message/{room_num}/{message}")
+async def get_messages(room_num: int, message: str):
+    return {
+        [
+            {"author": "Person 1", "message": "Hello!"},
+        ]
+    }
+@app.get("/api/get_messages/{room_num}")
+async def get_messages(room_num: int):
+
+    return {
+        [
+            {"author": "Person 1", "message": "Hello!"},
+        ]
+    }
