@@ -1,10 +1,11 @@
-from fastapi import FastAPI
+from fastapi import FastAPI, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from pymongo.mongo_client import MongoClient
 from pymongo.server_api import ServerApi
 import certifi
 import time
+from typing import Annotated
 
 app = FastAPI()
 origins = ["*"]
@@ -154,4 +155,14 @@ async def get_messages(room_num: int):
         formatted_response.append(message["message"])
     return {
         "return": formatted_response
+    }
+
+class Message(BaseModel):
+    name: str
+    message: str
+
+@app.post("/api/header_test")
+async def header_test(message: Message):
+    return {
+        "user_agent": message
     }
