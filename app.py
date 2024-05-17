@@ -122,19 +122,19 @@ async def ping_database():
 
     return {"response": response}
 
+class Message(BaseModel):
+    author: str
+    room: str
+    message: str
+    date: str
 
-@app.get("/api/add_message/{room_num}/{message}")
-async def add_message(room_num: int, message: str):
+@app.post("/api/add_message")
+async def add_message(message: Message):
     db = client["ComputerScience"]
     collection = db["ComputerScience"]
-    message_data = {
-        "author": "Placeholder McGee",
-        "message": message,
-        "room": f"Room {room_num}",
-        "time": "test",
-    }
+
     print("before database")
-    blah = collection.insert_one(message_data).inserted_id
+    blah = collection.insert_one(message).inserted_id
 
     print(blah)
 
@@ -157,9 +157,6 @@ async def get_messages(room_num: int):
         "return": formatted_response
     }
 
-class Message(BaseModel):
-    name: str
-    message: str
 
 @app.post("/api/header_test")
 async def header_test(message: Message):
