@@ -134,7 +134,8 @@ async def add_message(message: Message):
     collection = db["ComputerScience"]
 
     print("before database")
-    blah = collection.insert_one(message).inserted_id
+    print(message.dict())
+    blah = collection.insert_one(message.dict()).inserted_id
 
     print(blah)
 
