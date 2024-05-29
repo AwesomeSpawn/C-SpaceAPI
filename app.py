@@ -31,18 +31,18 @@ class Room(BaseModel):
     owner: str
     number: int
 
-class Message:
+class MessageClass:
     def __init(self):
         self.author = ""
         self.message = ""
-        self.room = ""
+        self.room_number = 0
         self.time = 0
 
-class Room:
+class RoomClass:
     def __init__(self):
         self.name = ""
         self.owner = ""
-        self.members = ""
+        self.members = []
 
     def get_message_history(self):
         # Make database call
@@ -101,7 +101,7 @@ async def sessions():
             "rooms": session.rooms}
 
 
-@app.put("/api/delete_session/{session_num}")
+@app.post("/api/delete_session/")
 async def delete_session(session_num: int):
     room_name = session.delete_session(session_num)
     return {"sessions": session.room_count,
@@ -124,9 +124,9 @@ async def ping_database():
 
 class Message(BaseModel):
     author: str
-    room: str
+    room: int
     message: str
-    date: str
+    date: int
 
 @app.post("/api/add_message")
 async def add_message(message: Message):
@@ -149,7 +149,7 @@ async def get_messages(room_num: int):
     db = client["ComputerScience"]
     collection = db["ComputerScience"]
 
-    response = collection.find({"room": f"Room {room_num}"})
+    response = collection.find({"room": f"{room_num}"})
     print(response)
     formatted_response = []
     for message in response:
