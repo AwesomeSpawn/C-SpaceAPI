@@ -124,9 +124,9 @@ async def ping_database():
 
 class Message(BaseModel):
     author: str
-    room: int
+    room_number: int
     message: str
-    date: int
+    time: int
 
 @app.post("/api/add_message")
 async def add_message(message: Message):
