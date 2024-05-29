@@ -153,7 +153,12 @@ async def get_messages(room_num: int):
     # print(response)
     formatted_response = []
     for message in response:
-        formatted_response.append(message)
+        data = {"message": message["message"],
+                "time": message["time"],
+                "author": message["author"],
+                }
+
+        formatted_response.append(data)
     print(formatted_response)
     return {
         "return": formatted_response
