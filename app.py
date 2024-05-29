@@ -150,10 +150,11 @@ async def get_messages(room_num: int):
     collection = db["ComputerScience"]
 
     response = collection.find({"room_number": room_num})
-    print(response)
+    # print(response)
     formatted_response = []
     for message in response:
-        formatted_response.append(message["message"])
+        formatted_response.append(message)
+    print(formatted_response)
     return {
         "return": formatted_response
     }
