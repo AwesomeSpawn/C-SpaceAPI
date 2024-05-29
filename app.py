@@ -54,12 +54,12 @@ class Session:
         self.room_count = 0
         self.rooms = {}
 
-    def new_session(self):
+    def new_room(self):
         self.room_count += 1
         self.rooms[f"Room {self.room_count}"] = "Room Placeholder"
         return f"Room {self.room_count}"
 
-    def delete_session(self, room_number):
+    def delete_room(self, room_number):
         self.rooms.pop(f"Room {room_number}")
         self.room_count -= 1
         return f"Room {self.room_count + 1}"
@@ -88,22 +88,22 @@ async def authenticate():
 #
 #    return {"message": "success", "room_name": {room.name}}
 
-@app.get("/api/new_session")
+@app.post("/api/new_room")
 async def new_session():
-    room_name = session.new_session()
+    room_name = session.new_room()
     return {"sessions": session.room_count,
             "created_room_name": room_name,
             "rooms": session.rooms}
 
-@app.get("/api/sessions")
+@app.get("/api/current_rooms")
 async def sessions():
-    return {"sessions": session.room_count,
+    return {"room_count": session.room_count,
             "rooms": session.rooms}
 
 
-@app.post("/api/delete_session/")
-async def delete_session(session_num: int):
-    room_name = session.delete_session(session_num)
+@app.post("/api/delete_room/")
+async def delete_session(room_number: int):
+    room_name = session.delete_room(room_number)
     return {"sessions": session.room_count,
             "deleted_room_name": room_name,
             "rooms": session.rooms}
