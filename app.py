@@ -61,7 +61,12 @@ class Session:
 
     def delete_room(self, room_number):
         self.rooms.pop(f"Room {room_number}")
+        db = client["ComputerScience"]
+        collection = db["ComputerScience"]
+        collection.delete_many({"room_number": room_number})
+
         self.room_count -= 1
+
         return f"Room {self.room_count + 1}"
 
 
