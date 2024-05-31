@@ -154,11 +154,11 @@ async def add_message(message: Message):
         ]
     }
 @app.get("/api/get_messages/{room_num}")
-async def get_messages(room_num: int):
+async def get_messages(room_number: int):
     db = client["ComputerScience"]
     collection = db["ComputerScience"]
 
-    response = collection.find({"room_number": room_num})
+    response = collection.find({"room_number": room_number})
     # print(response)
     formatted_response = []
     for message in response:
@@ -174,8 +174,8 @@ async def get_messages(room_num: int):
     }
 
 @app.post("/api/clear_messages/")
-async def clear_messages(room_num: int):
-    session.clear_room(room_num)
+async def clear_messages(room_number: int):
+    session.clear_room(room_number)
     return {
         "return": [
             "okie"
