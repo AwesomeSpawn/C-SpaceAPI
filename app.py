@@ -153,7 +153,7 @@ async def add_message(message: Message):
             "okie"
         ]
     }
-@app.get("/api/get_messages/{room_num}")
+@app.get("/api/get_messages/{room_number}")
 async def get_messages(room_number: int):
     db = client["ComputerScience"]
     collection = db["ComputerScience"]
