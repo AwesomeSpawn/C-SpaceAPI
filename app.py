@@ -137,6 +137,7 @@ class Message(BaseModel):
     message: str
     time: int
 
+
 @app.post("/api/add_message")
 async def add_message(message: Message):
     db = client["ComputerScience"]
@@ -173,7 +174,7 @@ async def get_messages(room_number: int):
         "return": formatted_response
     }
 
-@app.post("/api/clear_messages/")
+@app.post("/api/clear_messages/{room_number}")
 async def clear_messages(room_number: int):
     session.clear_room(room_number)
     return {
