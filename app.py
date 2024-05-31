@@ -61,13 +61,17 @@ class Session:
 
     def delete_room(self, room_number):
         self.rooms.pop(f"Room {room_number}")
-        db = client["ComputerScience"]
-        collection = db["ComputerScience"]
-        collection.delete_many({"room_number": room_number})
+
+        self.clear_room(room_number)
 
         self.room_count -= 1
 
         return f"Room {self.room_count + 1}"
+
+    def clear_room(self, room_number):
+        db = client["ComputerScience"]
+        collection = db["ComputerScience"]
+        collection.delete_many({"room_number": room_number})
 
 
 session = Session()
@@ -107,7 +111,7 @@ async def sessions():
 
 
 @app.post("/api/delete_room/")
-async def delete_session(room_number: int):
+async def delete_room(room_number: int):
     room_name = session.delete_room(room_number)
     return {"sessions": session.room_count,
             "deleted_room_name": room_name,
@@ -169,6 +173,14 @@ async def get_messages(room_num: int):
         "return": formatted_response
     }
 
+@app.post("/api/clear_messages/")
+async def clear_messages(room_num: int):
+    session.clear_room(room_num)
+    return {
+        "return": [
+            "okie"
+        ]
+    }
 
 @app.post("/api/header_test")
 async def header_test(message: Message):
